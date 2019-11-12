@@ -1,0 +1,38 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 80
+  servlet:
+    context-path: /fleamarket
+
+spring:
+  profiles:
+    active: dev
+#  redis:
+#    database: 0
+#    host: 106.13.36.188
+#    jedis:
+#      pool:
+#        #最大连接数据库连接数,设 0 为没有限制
+#        max-active: 8
+#        #最大等待连接中的数量,设 0 为没有限制
+#        max-idle: 8
+#        #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
+#        max-wait: -1ms
+#        #最小等待连接中的数量,设 0 为没有限制
+#        min-idle: 0
+#    lettuce:
+#      pool:
+#        max-active: 8
+#        max-idle: 8
+#        max-wait: -1ms
+#        min-idle: 0
+#      shutdown-timeout: 100ms
+#    password:
+#    port: 6379
+
+#mybatis:
+#  mpper-locations: classpath:mapper/*Mapper.xml
+#  type-aliases-package: com.moc.skeyeduMall.domain
