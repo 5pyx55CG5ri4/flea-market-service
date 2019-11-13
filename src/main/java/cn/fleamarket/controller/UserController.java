@@ -10,6 +10,8 @@ import cn.fleamarket.service.UserService;
 import cn.fleamarket.utils.StringTool;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +26,13 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/user")
+@Api("用户接口")
 public class UserController {
     @Autowired
     UserService userService;
 
     @PostMapping("/login")
+    @ApiOperation("登录接口")
     public JSONObject getUser(User user) {
         JSONObject ret = new JSONObject();
         try {
@@ -53,6 +57,7 @@ public class UserController {
     }
 
     @PutMapping("/add")
+    @ApiOperation("注册接口")
     public JSONObject addUser(User user) {
         JSONObject ret = new JSONObject();
         user.setId(StringTool.getUUID());
@@ -74,9 +79,12 @@ public class UserController {
     }
 
     @PostMapping("/update")
+    @ApiOperation("更新接口")
     public JSONObject update(User user) {
         JSONObject ret = new JSONObject();
-        user.setPassWord(StringTool.getMd5(user.getPassWord()));
+        if(null!=user.getPassWord()) {
+            user.setPassWord(StringTool.getMd5(user.getPassWord()));
+        }
         try {
             int i = userService.update(user);
             if (i > 0) {
