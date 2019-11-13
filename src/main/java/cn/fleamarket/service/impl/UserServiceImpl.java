@@ -15,7 +15,9 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 
-
+/**
+ * @author zining
+ */
 @Service
 public class UserServiceImpl implements UserService {
     @Resource

@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 /**
+ * @author zining
  * 字符串工具
  */
 public class StringTool {
@@ -45,6 +46,7 @@ public class StringTool {
 
     /**
      * Java对象转JSON对象
+     *
      * @param object
      * @return
      */
