@@ -65,8 +65,13 @@ public class User implements Serializable {
 	 */
 	private String aliopenid;
 	/**
-	 * 
+	 * 钱
 	 */
 	private Double money;
+
+	/**
+	 * 宿舍号
+	 */
+	private String room_id;
 
 }

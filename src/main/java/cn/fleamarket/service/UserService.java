@@ -1,6 +1,8 @@
 package cn.fleamarket.service;
 
 
+import cn.fleamarket.domain.User;
+
 import java.util.Map;
 
 /**
@@ -12,5 +14,10 @@ import java.util.Map;
  */
 public interface UserService {
 
+    int addUser(User user) throws Exception;
+
+    User qureyByUserName(String userName) throws Exception;
+
+    int update(User user) throws Exception;
 }
 
