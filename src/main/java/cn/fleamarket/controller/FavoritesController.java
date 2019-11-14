@@ -24,6 +24,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/favorites")
 public class FavoritesController {
-
-
 }

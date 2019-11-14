@@ -17,9 +17,12 @@ import cn.fleamarket.utils.StringTool;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.*;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -42,7 +45,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation("登录接口")
-    public JSONObject getUser(User user) {
+    public JSONObject getUser(User user, HttpSession session) {
         JSONObject ret = new JSONObject();
         try {
             User dbUser = userService.qureyByUserName(user.getUserName());
@@ -50,6 +53,7 @@ public class UserController {
                 ret.put("data", StringTool.ObjectToJSONObject(dbUser));
                 ret.put("code", 0);
                 ret.put("msg", "登录成功");
+                session.setAttribute("user",dbUser);
             } else {
                 ret.put("data", false);
                 ret.put("code", -1);
@@ -161,6 +165,22 @@ public class UserController {
             e.printStackTrace();
         }
         return ret;
+    }
+
+    /**
+     * 退出登录
+     * @param session
+     * @return
+     */
+    @DeleteMapping("/loginOut")
+    @ApiOperation("退出登录接口")
+    public JSONObject loginOut(HttpSession session){
+         session.removeAttribute("user");
+         JSONObject jsonObject = new JSONObject();
+         jsonObject.put("code",0);
+         jsonObject.put("data",true);
+         jsonObject.put("msg","退出登录成功");
+         return  jsonObject;
     }
 
 }
