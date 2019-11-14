@@ -6,6 +6,8 @@ import com.alibaba.fastjson.JSONObject;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -52,5 +54,25 @@ public class StringTool {
      */
     public static JSONObject ObjectToJSONObject(Object object) {
         return JSONObject.parseObject(JSON.toJSONString(object));
+    }
+
+    /**
+     * Java日期转字符串
+     *
+     * @param date
+     * @return
+     */
+    public static String dataTool(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return format.format(date);
+    }
+
+    /**
+     * 生成验证码
+     * @return
+     */
+    public static String getCodeToString(){
+        Integer x = (int) ((Math.random() * 9 + 1) * 10000);
+        return x.toString();
     }
 }

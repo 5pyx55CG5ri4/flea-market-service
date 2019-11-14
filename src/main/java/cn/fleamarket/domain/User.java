@@ -72,6 +72,6 @@ public class User implements Serializable {
 	/**
 	 * 宿舍号
 	 */
-	private String room_id;
+	private String roomId;
 
 }
