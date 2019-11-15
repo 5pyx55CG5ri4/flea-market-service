@@ -110,37 +110,43 @@ public class UserController {
         String id = jsonObject.getString("cId");
         Code code1 = codeService.selectById(id);
         String code = jsonObject.getString("code");
-        if (code.equals(code1.getCode())) {
-            try {
-                if (emailUtil.getTimeCJ(StringTool.dataTool(new Date()), StringTool.dataTool(code1.getCodeTime()))) {
-                    User user = new User();
-                    BeanUtils.copyProperties(code1, user);
-                    user.setId(StringTool.getUUID());
-                    user.setCreateTime(new Date());
-                    int i = userService.addUser(user);
-                    if (i > 0) {
-                        ret.put("code", 0);
-                        ret.put("data", true);
-                        ret.put("msg", "注册成功");
+        try {
+            if (code.equals(code1.getCode())) {
+                try {
+                    if (emailUtil.getTimeCJ(StringTool.dataTool(new Date()), StringTool.dataTool(code1.getCodeTime()))) {
+                        User user = new User();
+                        BeanUtils.copyProperties(code1, user);
+                        user.setId(StringTool.getUUID());
+                        user.setCreateTime(new Date());
+                        int i = userService.addUser(user);
+                        if (i > 0) {
+                            ret.put("code", 0);
+                            ret.put("data", true);
+                            ret.put("msg", "注册成功");
+                        }
+                    } else {
+                        ret.put("code", -1);
+                        ret.put("data", false);
+                        ret.put("msg", "验证码过时");
                     }
-                } else {
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                     ret.put("code", -1);
                     ret.put("data", false);
-                    ret.put("msg", "验证码过时");
+                    ret.put("msg", "注册失败");
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
+
+            } else {
                 ret.put("code", -1);
                 ret.put("data", false);
-                ret.put("msg", "注册失败");
+                ret.put("msg", "验证码错误");
             }
-
-        } else {
+        }catch (NullPointerException e){
             ret.put("code", -1);
             ret.put("data", false);
-            ret.put("msg", "验证码错误");
+            ret.put("msg", "验证码不能为空");
         }
         return ret;
     }

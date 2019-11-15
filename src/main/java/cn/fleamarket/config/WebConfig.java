@@ -13,8 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new Interceptor()).addPathPatterns("/**") //拦截路径
-        .excludePathPatterns("/static/**","/user/login","/user/getCode","/user/add","/product/productList");//放行路径
+        registry.addInterceptor(new Interceptor()).addPathPatterns("/user/loginOut","/user/update","/product/addProduct");
     }
 
     @Override
