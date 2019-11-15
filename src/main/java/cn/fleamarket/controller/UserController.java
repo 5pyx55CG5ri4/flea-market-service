@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.*;
 import org.apache.ibatis.annotations.Delete;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -69,7 +70,7 @@ public class UserController {
         return ret;
     }
 
-    @PostMapping("getCode")
+    @PostMapping("/getCode")
     @ApiOperation("获取验证码接口")
     public JSONObject getCode(User user) {
         JSONObject ret = new JSONObject();
@@ -182,5 +183,4 @@ public class UserController {
          jsonObject.put("msg","退出登录成功");
          return  jsonObject;
     }
-
 }
