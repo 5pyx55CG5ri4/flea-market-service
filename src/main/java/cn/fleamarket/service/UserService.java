@@ -18,6 +18,8 @@ public interface UserService {
 
     User qureyByUserName(String userName) throws Exception;
 
+    User qureyByEmail(String email) throws Exception;
+
     int update(User user) throws Exception;
 }
 

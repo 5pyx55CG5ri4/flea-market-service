@@ -6,6 +6,9 @@ server:
   port: 80
   servlet:
     context-path: /fleamarket
+#  ssl:
+#    key-store: fleamarket.fun.jks
+#    key-store-password: ycr9lg8994v0xb
 
 spring:
   profiles:

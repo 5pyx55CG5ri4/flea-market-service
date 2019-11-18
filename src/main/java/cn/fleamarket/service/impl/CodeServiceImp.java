@@ -24,4 +24,9 @@ public class CodeServiceImp implements CodeService {
     public void delete(String id) {
         codeMapper.deleteById(id);
     }
+
+    @Override
+    public int update(Code code) {
+        return codeMapper.updateById(code);
+    }
 }

@@ -9,4 +9,6 @@ public interface CodeService {
     Code selectById(String id);
 
     void delete(String id);
+
+    int update(Code code);
 }
