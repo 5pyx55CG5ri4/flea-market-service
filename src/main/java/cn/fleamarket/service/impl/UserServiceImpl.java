@@ -48,4 +48,9 @@ public class UserServiceImpl implements UserService {
         updateWrapper.eq("user_name",user.getUserName());
         return userMapper.update(user,updateWrapper);
     }
+
+    @Override
+    public User selectById(String id) {
+        return userMapper.selectById(id);
+    }
 }

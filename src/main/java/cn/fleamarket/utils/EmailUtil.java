@@ -20,7 +20,7 @@ public class EmailUtil {
     public boolean getCode(String toEmail,String code) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(toEmail);
-        simpleMailMessage.setFrom("zly_lyp82nlf@163.com");
+        simpleMailMessage.setFrom("fleamarket@aliyun.com");
         simpleMailMessage.setSubject("欢迎注册FleaMarket网站,验证码如下");
         simpleMailMessage.setText("验证码为" + code + "\nFleaMarket:" + code + "是您本次身份验证码,30分种内有效\nFleaMarket工作人员绝不会向您索取此验证码，切勿告知他人。【FleaMarket】");
         boolean ret = false;

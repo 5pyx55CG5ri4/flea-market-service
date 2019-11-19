@@ -3,7 +3,6 @@ package cn.fleamarket.service;
 import cn.fleamarket.domain.Product;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +15,19 @@ import java.util.Map;
 public interface ProductService{
 
     Page selectListPage(Map<String, Object> map);
+
+    Page selectListPageByUser(Map<String, Object> map);
+
+    int insert(Product product);
+
+    int update(Product product);
+
+    int updateById(String dbId,boolean sta);
+
+    Product selectById(String dbId);
+
+    int updateIncrease(Product product);
+
+    int delete(String id, String pId);
 }
 

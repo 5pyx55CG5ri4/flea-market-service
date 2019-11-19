@@ -38,7 +38,7 @@ public class UserController {
     CodeService codeService;
 
     @PostMapping("/login")
-    @ApiOperation("登录接口")
+    @ApiOperation("登录接口,用户名或者邮箱加密码即可")
     public JSONObject getUser(User user, HttpSession session) {
         JSONObject ret = new JSONObject();
         try {
@@ -80,7 +80,7 @@ public class UserController {
     }
 
     @PostMapping("/getCode")
-    @ApiOperation("获取验证码接口")
+    @ApiOperation("获取验证码接口,参数是email:接受验证码的邮箱,sta:状态码 0表示注册，1表示忘记密码")
     public JSONObject getCode(@RequestBody JSONObject jsonObject) {
         JSONObject ret = new JSONObject();
         String email = jsonObject.getString("email");
@@ -127,7 +127,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/add", produces = "application/json")
-    @ApiOperation("注册接口")
+    @ApiOperation("注册接口,传入用户填写的信息，加上code:验证码")
     public JSONObject addUser(User user, @RequestBody JSONObject jsonObject) {
         JSONObject ret = new JSONObject();
         String code = jsonObject.getString("code");
@@ -177,7 +177,7 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    @ApiOperation("忘记密码接口")
+    @ApiOperation("忘记密码接口,需要填写邮箱和密码，加上code:验证码")
     public JSONObject update(User user, @RequestBody JSONObject jsonObject) {
         JSONObject ret = new JSONObject();
         String code = jsonObject.getString("code");
@@ -196,7 +196,7 @@ public class UserController {
                             ret.put("code", 0);
                             ret.put("msg", "修改成功");
                         }
-                    }else {
+                    } else {
                         code1.setCode(null);
                         codeService.update(code1);
                         ret.put("code", -1);
@@ -210,7 +210,7 @@ public class UserController {
                     e.printStackTrace();
                 }
 
-            }else {
+            } else {
                 ret.put("code", -1);
                 ret.put("data", false);
                 ret.put("msg", "验证码错误");
@@ -230,7 +230,7 @@ public class UserController {
      * @return
      */
     @DeleteMapping("/loginOut")
-    @ApiOperation("退出登录接口")
+    @ApiOperation("退出登录接口，啥都不要")
     public JSONObject loginOut(HttpSession session) {
         session.removeAttribute("user");
         JSONObject jsonObject = new JSONObject();
@@ -238,5 +238,24 @@ public class UserController {
         jsonObject.put("data", true);
         jsonObject.put("msg", "退出登录成功");
         return jsonObject;
+    }
+
+    @GetMapping("/selectById")
+    @ApiOperation("根据用户id查询用户信息（不包括密码），传入id是字符串")
+    public JSONObject selectById(String id) {
+        JSONObject ret = new JSONObject();
+        try {
+            User user = userService.selectById(id);
+            user.setPassWord(null);
+            ret.put("data", StringTool.ObjectToJSONObject(user));
+            ret.put("code", 0);
+            ret.put("msg", "查询成功");
+        } catch (Exception e) {
+            ret.put("data", false);
+            ret.put("code", -1);
+            ret.put("msg", "查询失败");
+            e.printStackTrace();
+        }
+        return ret;
     }
 }

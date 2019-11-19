@@ -1,5 +1,7 @@
 package cn.fleamarket.service;
 
+import cn.fleamarket.domain.Image;
+
 import java.util.Map;
 
 /**
@@ -10,5 +12,6 @@ import java.util.Map;
  * @date 2019-11-12 10:46:22
  */
 public interface ImageService{
+    int insert(Image image);
 }
 

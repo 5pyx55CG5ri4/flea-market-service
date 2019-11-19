@@ -21,5 +21,7 @@ public interface UserService {
     User qureyByEmail(String email) throws Exception;
 
     int update(User user) throws Exception;
+
+    User selectById(String id);
 }
 

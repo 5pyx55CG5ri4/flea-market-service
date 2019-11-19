@@ -3,12 +3,13 @@ server:
     uri-encoding: UTF-8
     max-threads: 1000
     min-spare-threads: 30
-  port: 80
+  port: 443
   servlet:
     context-path: /fleamarket
-#  ssl:
-#    key-store: fleamarket.fun.jks
-#    key-store-password: ycr9lg8994v0xb
+  ssl:
+    key-store: fleamarket.fun.jks
+    key-store-password: ycr9lg8994v0xb
+
 
 spring:
   profiles:
