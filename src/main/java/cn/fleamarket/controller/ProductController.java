@@ -178,9 +178,16 @@ public class ProductController {
         JSONObject ret = new JSONObject();
         try {
             Product product = productService.selectById(id);
-            ret.put("code", "0");
-            ret.put("data", StringTool.ObjectToJSONObject(product));
-            ret.put("msg", "查询商品详情成功");
+            if(product!=null) {
+                ret.put("code", "0");
+                ret.put("data", StringTool.ObjectToJSONObject(product));
+                ret.put("msg", "查询商品详情成功");
+            }
+            else {
+                ret.put("code", "-1");
+                ret.put("data", false);
+                ret.put("msg", "查询商品详情失败");
+            }
         } catch (Exception e) {
             ret.put("code", "-1");
             ret.put("data", false);

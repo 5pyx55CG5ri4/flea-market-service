@@ -17,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new Interceptor()).addPathPatterns("/user/loginOut", "/product/addProduct", "/image/uploadImg"
                 , "/product/productListByUser", "/product/update", "/product/obtained"
         ,"/product/delete","/message/addMessage","/message/messageListByUser"
-        ,"/message/delete");
+        ,"/message/delete","/favorites/**");
     }
 
     @Override
