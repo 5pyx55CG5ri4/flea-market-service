@@ -1,6 +1,7 @@
 package cn.fleamarket.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import java.math.BigInteger;
@@ -54,6 +55,13 @@ public class StringTool {
      */
     public static JSONObject ObjectToJSONObject(Object object) {
         return JSONObject.parseObject(JSON.toJSONString(object));
+    }
+
+    /**
+     * list集合转json数组
+     */
+    public static JSONArray ListToJsonArray(Object object){
+        return JSON.parseArray(JSON.toJSONString(object));
     }
 
     /**
