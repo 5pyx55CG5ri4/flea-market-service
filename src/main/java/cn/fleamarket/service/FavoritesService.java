@@ -1,5 +1,8 @@
 package cn.fleamarket.service;
 
+import cn.fleamarket.domain.Favorites;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import java.util.Map;
 
 /**
@@ -10,5 +13,9 @@ import java.util.Map;
  * @date 2019-11-12 10:46:22
  */
 public interface FavoritesService{
+
+    Page selectListPage(Map<String, Object> map);
+    Integer addFavorites(Favorites favorites);
+    Integer deleteFavorites(String fid);
 }
 
