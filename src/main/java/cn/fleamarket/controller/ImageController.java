@@ -48,7 +48,7 @@ public class ImageController {
             String os = System.getProperty("os.name");
             if (os.toLowerCase().startsWith("win")) {
                 file1 = new File(Image.WIN_UPLOAD, newFileName);
-            }else {
+            } else {
                 file1 = new File(Image.LINUX_UPLOAD, newFileName);
             }
 
@@ -60,7 +60,7 @@ public class ImageController {
             image.setImgUrl(newFileName);
             imageService.insert(image);
             ret.put("code", 0);
-            ret.put("data", image.getImgUrl());
+            ret.put("data", File.separator + "static" + File.separator + "img" + File.separator + image.getImgUrl());
             ret.put("msg", "图片上传成功");
         } catch (Exception e) {
             ret.put("code", -1);
