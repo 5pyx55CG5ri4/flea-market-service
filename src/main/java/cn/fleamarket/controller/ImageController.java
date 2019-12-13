@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/image")
 @Api("图片接口")
+@CrossOrigin
 public class ImageController {
     @Autowired
     ImageService imageService;

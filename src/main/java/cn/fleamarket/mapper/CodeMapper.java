@@ -9,7 +9,4 @@ import java.io.Serializable;
 
 @Mapper
 public interface CodeMapper extends BaseMapper<Code> {
-    @Select("SELECT * FROM f_code WHERE id=#{id}")
-    @Override
-    Code selectById(Serializable id);
 }

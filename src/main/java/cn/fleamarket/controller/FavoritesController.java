@@ -6,6 +6,7 @@ import java.util.*;
 import cn.fleamarket.domain.Favorites;
 import cn.fleamarket.domain.User;
 import cn.fleamarket.service.FavoritesService;
+import cn.fleamarket.service.UserService;
 import cn.fleamarket.utils.StringTool;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -31,49 +32,82 @@ public class FavoritesController {
 
     @Autowired
     private FavoritesService favoritesService;
+    @Autowired
+    UserService userService;
 
-    @PostMapping(value = "/favoriteList" , produces = "application/json")
-    @ApiOperation("收藏分页查询列表")
-    public JSONObject favoritesList(@RequestBody JSONObject jsonObject,HttpServletRequest request, HttpServletResponse response){
+    @PostMapping(value = "/favoriteList", produces = "application/json")
+    @ApiOperation("收藏分页查询列表,入参是page:第几页,number:每页几条")
+    public JSONObject favoritesList(@RequestBody JSONObject jsonObject, HttpServletRequest request, HttpServletResponse response) {
         JSONObject ret = new JSONObject();
-        User user = (User)request.getSession().getAttribute("user");
+        User user = null;
         try {
-            if (user != null){
+            user = userService.qureyByUserName(jsonObject.getString("username"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (user != null) {
                 Long page = jsonObject.getLong("page");
                 Long number = jsonObject.getLong("number");
                 Map<String, Object> map = new HashMap<>();
                 map.put("page", page);
                 map.put("number", number);
-                map.put("id",user.getId());
+                map.put("id", user.getId());
                 if (page != null && number != null) {
                     Page<Favorites> favoritesPage = favoritesService.selectListPage(map);
                     List<Favorites> favoritesList = favoritesPage.getRecords();
+                    List<Favorites> newList = new ArrayList<>();
+                    Set<String> set = new HashSet<String>();
+                    for (Favorites favorites : favoritesList) {
+                        String pid = favorites.getProductId();
+                        if (!set.contains(pid)) { //set中不包含重复的
+                            set.add(pid);
+                            newList.add(favorites);
+                        }
+                    }
                     ret.put("code", 0);
-                    ret.put("data", JSON.toJSONString(favoritesList));
+                    ret.put("data", StringTool.ListToJsonArray(newList));
                     ret.put("total", favoritesPage.getTotal());//总数
                     ret.put("next", favoritesPage.hasNext());//下一页
                     ret.put("previous", favoritesPage.hasPrevious());//上一页
                     ret.put("msg", "查询成功");
                 }
-            }else {
-                ret.put("msg","用户未登录");
+            } else {
+                ret.put("msg", "用户未登录");
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             ret.put("code", 0);
             ret.put("data", null);
             ret.put("msg", "查询失败");
+            e.printStackTrace();
         }
         return ret;
     }
 
-    @PostMapping(value = "/addFavorites", produces = "application/json" )
-    @ApiOperation("添加收藏")
-    public JSONObject addFavorites(@RequestBody JSONObject jsonObject,HttpServletRequest request, HttpServletResponse response){
+    @PostMapping(value = "/addFavorites", produces = "application/json")
+    @ApiOperation("添加收藏,pid:商品id")
+    public JSONObject addFavorites(@RequestBody JSONObject jsonObject, HttpServletRequest request, HttpServletResponse response) {
         JSONObject ret = new JSONObject();
-        User user = (User)request.getSession().getAttribute("user");
+        User user = null;
         try {
-            if (user != null){
+            user = user = userService.qureyByUserName(jsonObject.getString("username"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            List<Favorites> list = favoritesService.selectByUid(user.getId());
+            if(list.size()!=0){
+                for (int i = 0; i <list.size() ; i++) {
+                    if(list.get(i).getProductId().equals(jsonObject.getString("pid"))){
+                        ret.put("code", -1);
+                        ret.put("data", false);
+                        ret.put("msg", "添加失败");
+                        return ret;
+                    }
+                }
+            }
+            if (user != null) {
                 String productId = jsonObject.getString("pid");
                 Integer state = jsonObject.getInteger("state");
                 Favorites favorites = new Favorites();
@@ -90,13 +124,13 @@ public class FavoritesController {
                 } else {
                     ret.put("code", -1);
                     ret.put("data", false);
-                    ret.put("msg", "注册失败");
+                    ret.put("msg", "添加失败");
                 }
-            }else {
-                ret.put("msg","用户未登录");
+            } else {
+                ret.put("msg", "用户未登录");
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             ret.put("code", -1);
             ret.put("data", false);
@@ -105,19 +139,29 @@ public class FavoritesController {
         return ret;
     }
 
-    @DeleteMapping(value = "/deleteFavorites",produces = "application/json")
-    @ApiOperation("删除收藏")
-    public JSONObject deleteFavorites(@RequestBody JSONObject jsonObject,HttpServletRequest request, HttpServletResponse response){
+    @PostMapping(value = "/deleteFavorites", produces = "application/json")
+    @ApiOperation("删除收藏,fid:收藏id")
+    public JSONObject deleteFavorites(@RequestBody JSONObject jsonObject, HttpServletRequest request, HttpServletResponse response) {
         JSONObject ret = new JSONObject();
-        User user = (User)request.getSession().getAttribute("user");
+        User user = null;
+        try {
+            user = userService.qureyByUserName(jsonObject.getString("username"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             if (user != null) {
                 String fid = jsonObject.getString("fid");
                 Integer isS = favoritesService.deleteFavorites(fid);
-            }else {
-                ret.put("msg","用户未登录");
+                if(isS>0){
+                    ret.put("code", 0);
+                    ret.put("data", true);
+                    ret.put("msg", "删除成功");
+                }
+            } else {
+                ret.put("msg", "用户未登录");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             ret.put("code", -1);
             ret.put("data", false);

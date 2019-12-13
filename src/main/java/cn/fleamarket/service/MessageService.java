@@ -15,4 +15,6 @@ public interface MessageService {
     Page<Message> selectListPageByUser(Map<String, Object> map);
 
     int delete(String id, String pId);
+
+    public int deletebyFid(String fid) throws Exception;
 }

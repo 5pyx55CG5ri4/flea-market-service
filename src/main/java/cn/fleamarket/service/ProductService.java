@@ -18,6 +18,8 @@ public interface ProductService{
 
     Page selectListPageByUser(Map<String, Object> map);
 
+    Page selectListsPageById(Map<String, Object> map);
+
     int insert(Product product);
 
     int update(Product product);

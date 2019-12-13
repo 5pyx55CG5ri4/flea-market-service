@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -28,7 +29,7 @@ public class FavoritesServiceImpl implements FavoritesService {
         String id = (String) map.get("id");
         Page<Favorites> favoritesPage = new Page<Favorites>(page, number);
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("id", id);
+        queryWrapper.eq("user_id", id);
         favoritesMapper.selectPage(favoritesPage, queryWrapper);
         return favoritesPage;
     }
@@ -41,6 +42,13 @@ public class FavoritesServiceImpl implements FavoritesService {
     @Override
     public Integer deleteFavorites(String fid) {
         return favoritesMapper.deleteById(fid);
+    }
+
+    @Override
+    public List<Favorites> selectByUid(String uId) {
+        QueryWrapper<Favorites> favoritesServiceQueryWrapper = new QueryWrapper<>();
+        favoritesServiceQueryWrapper.eq("user_id",uId);
+        return favoritesMapper.selectList(favoritesServiceQueryWrapper);
     }
 
 

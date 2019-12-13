@@ -1,5 +1,6 @@
 package cn.fleamarket.domain;
 
+import cn.fleamarket.utils.StringTool;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -36,6 +37,11 @@ public class Favorites implements Serializable {
 	 * 收藏时间
 	 */
 	private Date createTime;
+
+	public String getCreateTime() {
+		return StringTool.dataTool(createTime);
+	}
+
 	/**
 	 * 状态
 	 */

@@ -5,8 +5,11 @@ import java.util.*;
 
 import cn.fleamarket.domain.Product;
 import cn.fleamarket.domain.User;
+import cn.fleamarket.service.MessageService;
 import cn.fleamarket.service.ProductService;
+import cn.fleamarket.service.UserService;
 import cn.fleamarket.utils.StringTool;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -30,6 +33,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ProductController {
     @Autowired
     ProductService productService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    MessageService messageService;
 
     @PostMapping(value = "/productList", produces = "application/json")
     @ApiOperation("分页查询列表,入参是page:第几页,number:每页几条，key:查询条件(可选)")
@@ -39,6 +46,7 @@ public class ProductController {
             Long page = jsonObject.getLong("page");
             Long number = jsonObject.getLong("number");
             String key = jsonObject.getString("key");
+            JSONArray jsonArray = jsonObject.getJSONArray("pId");
             Map<String, Object> map = new HashMap<>();
             map.put("page", page);
             map.put("number", number);
@@ -52,6 +60,18 @@ public class ProductController {
                 ret.put("next", productPage.hasNext());//下一页
                 ret.put("previous", productPage.hasPrevious());//上一页
                 ret.put("msg", "查询成功");
+                return ret;
+            }
+            if (jsonArray.size() != 0 && jsonArray != null) {
+                List<Product> list = new ArrayList<>();
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    Product product = productService.selectById(jsonArray.get(i).toString());
+                    list.add(product);
+                }
+                ret.put("code", 0);
+                ret.put("data", StringTool.ListToJsonArray(list));
+                ret.put("msg", "查询成功");
+                return ret;
             }
         } catch (Exception e) {
             ret.put("code", -1);
@@ -69,7 +89,7 @@ public class ProductController {
             Long page = jsonObject.getLong("page");
             Long number = jsonObject.getLong("number");
             Map<String, Object> map = new HashMap<>();
-            User user = (User) request.getSession().getAttribute("user");
+            User user = userService.qureyByUserName(jsonObject.getString("username"));
             map.put("page", page);
             map.put("number", number);
             map.put("userId", user.getId());
@@ -91,14 +111,80 @@ public class ProductController {
         return ret;
     }
 
-    @PutMapping("/addProduct")
-    @ApiOperation("增加商品,入参是要增加的商品信息,记得带上上传图片接口返回的url")
-    public JSONObject addProduct(Product product, HttpServletRequest request) {
+    @PostMapping(value = "/productListById", produces = "application/json")
+    @ApiOperation("分页查询属于某个用户的商品列表,就是我发布的商品,入参是page:第几页,number:每页几条")
+    public JSONObject productListById(@RequestBody JSONObject jsonObject, HttpServletRequest request) {
         JSONObject ret = new JSONObject();
         try {
+            Long page = jsonObject.getLong("page");
+            Long number = jsonObject.getLong("number");
+            Object[] pIds = jsonObject.getJSONArray("pId").toArray();
+            List<Object> list = new ArrayList<Object>();
+            for (int i = 0; i < pIds.length; i++) {
+                if (!list.contains(pIds[i])) {
+                    list.add(pIds[i]);
+                }
+            }
+            Object[] pIdss = list.toArray();
+            Map<String, Object> map = new HashMap<>();
+            map.put("page", page);
+            map.put("number", number);
+            map.put("pId", pIdss);
+            if (page != null && number != null && pIds != null) {
+                Page<Product> productPage = productService.selectListsPageById(map);
+                List<Product> productList = productPage.getRecords();
+                ret.put("code", 0);
+                ret.put("data", StringTool.ListToJsonArray(productList));
+                ret.put("total", productPage.getTotal());//总数
+                ret.put("next", productPage.hasNext());//下一页
+                ret.put("previous", productPage.hasPrevious());//上一页
+                ret.put("msg", "查询成功");
+            }
+        } catch (Exception e) {
+            ret.put("code", -1);
+            ret.put("data", null);
+            ret.put("msg", "查询失败");
+        }
+        return ret;
+    }
+
+    @PostMapping(value = "/productListByIds", produces = "application/json")
+    @ApiOperation("分页查询属于某个用户的商品列表,就是我发布的商品,入参是page:第几页,number:每页几条")
+    public JSONObject productListByIds(@RequestBody JSONObject jsonObject, HttpServletRequest request) {
+        JSONObject ret = new JSONObject();
+        try {
+            Object[] pIds = jsonObject.getJSONArray("pId").toArray();
+            List<Product> productList = new ArrayList<>();
+            for (int i = 0; i < pIds.length; i++) {
+                Product product = productService.selectById(pIds[i].toString());
+                productList.add(product);
+            }
+            ret.put("code", 0);
+            ret.put("data", StringTool.ListToJsonArray(productList));
+            ret.put("msg", "查询成功");
+
+        } catch (Exception e) {
+            ret.put("code", -1);
+            ret.put("data", null);
+            ret.put("msg", "查询失败");
+        }
+        return ret;
+    }
+
+    @PutMapping("/addProduct")
+    @ApiOperation("增加商品,入参是要增加的商品信息,记得带上上传图片接口返回的url")
+    public JSONObject addProduct(@RequestBody JSONObject par, HttpServletRequest request) {
+        JSONObject ret = new JSONObject();
+        try {
+            Product product = new Product();
             product.setId(StringTool.getUUID());
             product.setCreateTime(new Date());
-            User user = (User) request.getSession().getAttribute("user");
+            product.setBprice(par.getDouble("bprice"));
+            product.setTitle(par.getString("title"));
+            product.setImgUrl(par.getString("imgUrl"));
+            product.setPrice(par.getDouble("price"));
+            product.setContent(par.getString("content"));
+            User user = userService.qureyByUserName(par.getString("username"));
             product.setUserId(user.getId());
             int i = productService.insert(product);
             if (i > 0) {
@@ -122,6 +208,7 @@ public class ProductController {
     @ApiOperation("修改商品信息,传入要修改的信息，主要是商品id")
     public JSONObject update(Product product) {
         JSONObject ret = new JSONObject();
+        product.setCreateTime(new Date());
         try {
             if (product.getId() != null && productService.update(product) > 0) {
                 ret.put("code", "0");
@@ -178,12 +265,11 @@ public class ProductController {
         JSONObject ret = new JSONObject();
         try {
             Product product = productService.selectById(id);
-            if(product!=null) {
+            if (product != null) {
                 ret.put("code", "0");
                 ret.put("data", StringTool.ObjectToJSONObject(product));
                 ret.put("msg", "查询商品详情成功");
-            }
-            else {
+            } else {
                 ret.put("code", "-1");
                 ret.put("data", false);
                 ret.put("msg", "查询商品详情失败");
@@ -223,18 +309,25 @@ public class ProductController {
         return ret;
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     @ApiOperation("删除商品接口，主要传商品id即可")
-    public JSONObject delete(@RequestBody JSONObject id, HttpServletRequest request) {
+    public JSONObject delete(@RequestBody JSONObject jsonObject, HttpServletRequest request) {
         JSONObject ret = new JSONObject();
-        String pId = id.getString("id");
-        User user = (User) request.getSession().getAttribute("user");
+        String pId = jsonObject.getString("id");
+        User user = null;
+        try {
+            user = userService.qureyByUserName(jsonObject.getString("username"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             int i = productService.delete(user.getId(), pId);
             if (i > 0) {
-                ret.put("code", "0");
-                ret.put("data", true);
-                ret.put("msg", "删除商品成功");
+                if(messageService.deletebyFid(pId)>0) {
+                    ret.put("code", "0");
+                    ret.put("data", true);
+                    ret.put("msg", "删除商品成功");
+                }
             } else {
                 ret.put("code", "-1");
                 ret.put("data", false);

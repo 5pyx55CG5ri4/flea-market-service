@@ -3,6 +3,7 @@ package cn.fleamarket.service;
 import cn.fleamarket.domain.Favorites;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,5 +18,6 @@ public interface FavoritesService{
     Page selectListPage(Map<String, Object> map);
     Integer addFavorites(Favorites favorites);
     Integer deleteFavorites(String fid);
+    List<Favorites> selectByUid(String uId);
 }
 

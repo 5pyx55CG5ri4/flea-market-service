@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Map;
 
 
@@ -43,9 +44,22 @@ public class ProductServiceImpl implements ProductService {
         String userId = (String) map.get("userId");
         Page<Product> productPage = new Page<Product>(page, number);
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("is_show", 1);
+//        queryWrapper.eq("is_show", 1);
         queryWrapper.eq("is_del", 0);
         queryWrapper.eq("user_id",userId);
+        productMapper.selectPage(productPage,queryWrapper);
+        return productPage;
+    }
+    @Override
+    public Page selectListsPageById(Map<String, Object> map) {
+        Long page = (Long) map.get("page");
+        Long number = (Long) map.get("number");
+        Object[] ids = (Object[]) map.get("pId");
+        Page<Product> productPage = new Page<Product>(page, number);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("is_show", 1);
+        queryWrapper.eq("is_del", 0);
+        queryWrapper.in("id",ids);
         productMapper.selectPage(productPage,queryWrapper);
         return productPage;
     }
@@ -72,6 +86,7 @@ public class ProductServiceImpl implements ProductService {
         } else {
             product.setIsShow(1);
         }
+        product.setCreateTime(new Date());
         return productMapper.update(product, updateWrapper);
     }
 
@@ -95,6 +110,7 @@ public class ProductServiceImpl implements ProductService {
         updateWrapper.eq("user_id",uid);
         Product product = new Product();
         product.setIsDel(1);
+        product.setCreateTime(new Date());
         return productMapper.update(product,updateWrapper);
     }
 }

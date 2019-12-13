@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 
@@ -52,5 +53,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User selectById(String id) {
         return userMapper.selectById(id);
+    }
+
+    @Override
+    public List<User> selectByIds(Object[] id) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.in("id",id);
+        return userMapper.selectList(queryWrapper);
     }
 }

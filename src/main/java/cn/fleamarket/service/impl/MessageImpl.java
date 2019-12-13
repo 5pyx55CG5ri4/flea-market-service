@@ -49,6 +49,11 @@ public class MessageImpl implements MessageService {
         UpdateWrapper updateWrapper = new UpdateWrapper();
         updateWrapper.eq("id",pId);
         updateWrapper.eq("t_id",id);
-        return messageMapper.delete(updateWrapper);
+        return messageMapper.deleteById(pId);
+    }
+
+    @Override
+    public int deletebyFid(String fid) throws Exception {
+        return messageMapper.delete(fid);
     }
 }

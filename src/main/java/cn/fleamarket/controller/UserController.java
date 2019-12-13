@@ -1,7 +1,9 @@
 package cn.fleamarket.controller;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 import cn.fleamarket.domain.Code;
@@ -10,12 +12,19 @@ import cn.fleamarket.service.CodeService;
 import cn.fleamarket.service.UserService;
 import cn.fleamarket.utils.EmailUtil;
 import cn.fleamarket.utils.StringTool;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.*;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpRequest;
+import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -39,7 +48,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation("登录接口,用户名或者邮箱加密码即可")
-    public JSONObject getUser(User user, HttpSession session) {
+    public JSONObject getUser(@RequestBody User user, HttpServletResponse response) {
         JSONObject ret = new JSONObject();
         try {
             User dbUser = userService.qureyByUserName(user.getUserName());
@@ -47,7 +56,8 @@ public class UserController {
                 ret.put("data", StringTool.ObjectToJSONObject(dbUser));
                 ret.put("code", 0);
                 ret.put("msg", "登录成功");
-                session.setAttribute("user", dbUser);
+                Cookie cookie = new Cookie("user", dbUser.toString());
+                response.addCookie(cookie);
             } else {
                 ret.put("data", false);
                 ret.put("code", -1);
@@ -60,7 +70,8 @@ public class UserController {
                     ret.put("data", StringTool.ObjectToJSONObject(user1));
                     ret.put("code", 0);
                     ret.put("msg", "登录成功");
-                    session.setAttribute("user", user1);
+                    Cookie cookie = new Cookie("user", user1.toString());
+                    response.addCookie(cookie);
                 } else {
                     ret.put("data", false);
                     ret.put("code", -1);
@@ -84,44 +95,44 @@ public class UserController {
     public JSONObject getCode(@RequestBody JSONObject jsonObject) {
         JSONObject ret = new JSONObject();
         String email = jsonObject.getString("email");
-        String sta = jsonObject.getString("sta");//0表示注册获取验证码,1表示忘记密码获取验证码
-        if (email != null) {
-            try {
-                String code = StringTool.getCodeToString();
-                Code codes = new Code();
-                codes.setId(email);
-                codes.setCode(code);
-                codes.setCodeTime(new Date());
-                int i = 0;
-                if ("0".equals(sta)) {
-                    i = codeService.insert(codes);
-                }
-                if ("1".equals(sta) && codeService.selectById(email) != null) {
-                    i = codeService.update(codes);
-                } else {
-                    ret.put("code", -1);
-                    ret.put("data", false);
-                    ret.put("msg", "该账号不存在");
-                }
-                if (i > 0 && emailUtil.getCode(email, code)) {
-                    ret.put("code", 0);
-                    ret.put("data", true);
-                    ret.put("msg", "验证码发送成功，请注意查收");
-                }
-            } catch (DataIntegrityViolationException e) {
+        Integer sta = Integer.parseInt(jsonObject.getString("sta"));//0表示注册获取验证码,1表示忘记密码获取验证码
+        try {
+            String code = StringTool.getCodeToString();
+            Code codes = new Code();
+            codes.setId(email);
+            codes.setCode(code);
+            codes.setCodeTime(new Date());
+            Code code1 = codeService.selectById(email);
+            int i = 0;
+            if (sta == 0) {
+                i = codeService.insert(codes);
+            } else if (sta == 1 && code1 != null) {
+                i = codeService.update(codes);
+            } else {
                 ret.put("code", -1);
                 ret.put("data", false);
-                ret.put("msg", "该邮箱已经注册过");
-            } catch (Exception e) {
-                e.printStackTrace();
-                ret.put("code", -1);
-                ret.put("data", false);
-                ret.put("msg", "未知错误");
+                ret.put("msg", "该账号不存在");
+                return ret;
             }
-        } else {
-            ret.put("code", 0);
+
+            if (i > 0 && emailUtil.getCode(email, code, sta)) {
+                ret.put("code", 0);
+                ret.put("data", true);
+                ret.put("msg", "验证码发送成功，请注意查收");
+            } else {
+                ret.put("code", -1);
+                ret.put("data", false);
+                ret.put("msg", "发送验证码失败");
+            }
+        } catch (DataIntegrityViolationException e) {
+            ret.put("code", -1);
             ret.put("data", false);
-            ret.put("msg", "邮箱为空");
+            ret.put("msg", "该邮箱已经注册过");
+        } catch (Exception e) {
+            e.printStackTrace();
+            ret.put("code", -1);
+            ret.put("data", false);
+            ret.put("msg", "未知错误");
         }
         return ret;
     }
@@ -258,4 +269,45 @@ public class UserController {
         }
         return ret;
     }
+
+    @PostMapping("/selectByIds")
+    @ApiOperation("根据用户id查询用户信息（不包括密码），传入id是字符串")
+    public JSONObject selectByIds(@RequestBody JSONObject ids) {
+        JSONObject ret = new JSONObject();
+        try {
+            Object[] id = ids.getJSONArray("ids").toArray();
+            List<User> list = new ArrayList<>();
+            for (int i = 0; i < id.length; i++) {
+                User user = userService.selectById(id[i].toString());
+                list.add(user);
+            }
+            ret.put("data", StringTool.ListToJsonArray(list));
+            ret.put("code", 0);
+            ret.put("msg", "查询成功");
+        } catch (Exception e) {
+            ret.put("data", false);
+            ret.put("code", -1);
+            ret.put("msg", "查询失败");
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+    @GetMapping("/isLogin")
+    @ApiOperation("判断是否登录，啥都不要")
+    public JSONObject isLogin(HttpServletRequest request) {
+        JSONObject jsonObject = new JSONObject();
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("user")) {
+                jsonObject.put("code", 0);
+                jsonObject.put("data", true);
+                break;
+            }
+        }
+        jsonObject.put("code", -1);
+        jsonObject.put("data", false);
+        return jsonObject;
+    }
+
 }

@@ -3,6 +3,7 @@ package cn.fleamarket.service;
 
 import cn.fleamarket.domain.User;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,5 +24,7 @@ public interface UserService {
     int update(User user) throws Exception;
 
     User selectById(String id);
+
+    List<User> selectByIds(Object[] id);
 }
 

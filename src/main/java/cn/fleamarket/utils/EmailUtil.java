@@ -16,11 +16,15 @@ public class EmailUtil {
     @Autowired
     JavaMailSenderImpl javaMailSender;
 
-    public boolean getCode(String toEmail,String code) {
+    public boolean getCode(String toEmail, String code, int sta) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(toEmail);
         simpleMailMessage.setFrom("fleamarket@aliyun.com");
-        simpleMailMessage.setSubject("欢迎注册FleaMarket网站,验证码如下");
+        if(sta==0) {
+            simpleMailMessage.setSubject("欢迎注册FleaMarket官网,验证码如下");
+        } else if(sta==1){
+            simpleMailMessage.setSubject("您正在FleaMarket上找回密码,验证码如下");
+        }
         simpleMailMessage.setText("验证码为" + code + "\nFleaMarket:" + code + "是您本次身份验证码,30分种内有效\nFleaMarket工作人员绝不会向您索取此验证码，切勿告知他人。【FleaMarket】");
         boolean ret = false;
         try {
@@ -48,7 +52,7 @@ public class EmailUtil {
         long to = simpleFormat.parse(newData).getTime();
         int minutes = (int) ((to - from) / (1000 * 60));
         System.out.println(minutes);
-        return minutes < 30;
+        return minutes < 1;
     }
 
 }
