@@ -1,5 +1,6 @@
 package cn.fleamarket.domain;
 
+import cn.fleamarket.utils.GenerateSqlToBean;
 import cn.fleamarket.utils.StringTool;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -18,6 +19,7 @@ import lombok.Data;
 @Data
 @TableName("f_favorites")
 public class Favorites implements Serializable {
+	@GenerateSqlToBean.NotGenerateSql
 	private static final long serialVersionUID = 1L;
 
 	/**

@@ -1,5 +1,6 @@
 package cn.fleamarket.domain;
 
+import cn.fleamarket.utils.GenerateSqlToBean;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -17,6 +18,7 @@ import lombok.Data;
 @Data
 @TableName("f_order")
 public class Order implements Serializable {
+	@GenerateSqlToBean.NotGenerateSql
 	private static final long serialVersionUID = 1L;
 
 	/**

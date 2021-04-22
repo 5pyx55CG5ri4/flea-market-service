@@ -1,20 +1,15 @@
 spring:
   datasource:
-    url: jdbc:mysql://118.31.6.253:3306/FleaMarket?autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    url: jdbc:mysql://127.0.0.1:3306/face?autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
     username: root
-    password: *******.
+    password:
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
 
-#  thymeleaf:
-#    cache: false
-#    prefix: classpath:/templates/
-#    suffix: .html
-#    encoding: utf-8
-#    mode: html5
-#    servlet:
-#      content-type: text/html
+img-file-path:
+  win-path: C:/Users/Administrator/Desktop/FleaMarket/FleaMarket/target/classes/static/img/
+  linux-path: /usr/local/img/
 
 
 

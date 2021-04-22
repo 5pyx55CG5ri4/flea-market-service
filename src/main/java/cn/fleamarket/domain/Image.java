@@ -1,5 +1,6 @@
 package cn.fleamarket.domain;
 
+import cn.fleamarket.utils.GenerateSqlToBean;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -19,8 +20,7 @@ import lombok.Data;
 @TableName("f_image")
 public class Image implements Serializable {
 
-    public static final String WIN_UPLOAD = "C:/Users/Administrator/Desktop/FleaMarket/FleaMarket/target/classes/static/img/";
-    public static final String LINUX_UPLOAD = "/usr/local/img/";
+    @GenerateSqlToBean.NotGenerateSql
     private static final long serialVersionUID = 1L;
 
     /**

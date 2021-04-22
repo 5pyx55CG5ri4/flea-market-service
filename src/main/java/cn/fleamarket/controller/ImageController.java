@@ -2,6 +2,7 @@ package cn.fleamarket.controller;
 
 import java.io.File;
 
+import cn.fleamarket.config.PathConfig;
 import cn.fleamarket.domain.Image;
 import cn.fleamarket.service.ImageService;
 import cn.fleamarket.utils.StringTool;
@@ -27,8 +28,12 @@ import javax.servlet.http.HttpServletRequest;
 @Api("图片接口")
 @CrossOrigin
 public class ImageController {
+
     @Autowired
     ImageService imageService;
+
+    @Autowired
+    private PathConfig pathConfig;
 
     /**
      * 图片上传
@@ -48,9 +53,9 @@ public class ImageController {
         try {
             String os = System.getProperty("os.name");
             if (os.toLowerCase().startsWith("win")) {
-                file1 = new File(Image.WIN_UPLOAD, newFileName);
+                file1 = new File(pathConfig.getWinPath(), newFileName);
             } else {
-                file1 = new File(Image.LINUX_UPLOAD, newFileName);
+                file1 = new File(pathConfig.getWinPath(), newFileName);
             }
 
             if (!file1.exists()) {
