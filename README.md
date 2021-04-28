@@ -30,8 +30,8 @@
 1. Service没有事务;
 1. 代码健壮性不够;
 1. 前后端分离没有做token机制,代码耦合太高;
- _强调_ 
-目前已修改的:
+ 
+ **目前已修改的:** 
 
 1. 封装了统一返回的结果类R(path:"cn.fleamarket.common.R");
 1. 封装了接收分页参数类PageParam(path:"cn.fleamarket.common.PageParam"),所有实体类都可以继承此类;
