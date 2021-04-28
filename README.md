@@ -38,7 +38,7 @@
 
 1. 封装了统一返回的结果类R(path:"cn.fleamarket.common.R");
 1. 封装了接收分页参数类PageParam(path:"cn.fleamarket.common.PageParam"),所有实体类都可以继承此类;
-1. 把某个Controller里的便便改成了诗😉(狗头保命!!!);
+1. 把某个Controller里的便便改成了诗😉(狗头保命!!!,大佬轻喷!!!);
 
 ps有图有真相:
 
