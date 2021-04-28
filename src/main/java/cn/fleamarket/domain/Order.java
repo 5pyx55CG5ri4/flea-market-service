@@ -1,5 +1,6 @@
 package cn.fleamarket.domain;
 
+import cn.fleamarket.common.PageParam;
 import cn.fleamarket.utils.GenerateSqlToBean;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -7,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 订单表
@@ -16,8 +18,9 @@ import lombok.Data;
  * @date 2019-11-12 10:46:22
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("f_order")
-public class Order implements Serializable {
+public class Order extends PageParam implements Serializable {
 	@GenerateSqlToBean.NotGenerateSql
 	private static final long serialVersionUID = 1L;
 

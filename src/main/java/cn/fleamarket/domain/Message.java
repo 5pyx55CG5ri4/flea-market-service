@@ -1,10 +1,12 @@
 package cn.fleamarket.domain;
 
+import cn.fleamarket.common.PageParam;
 import cn.fleamarket.utils.StringTool;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,8 +15,9 @@ import java.util.Date;
  * 留言接口
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("f_message")
-public class Message implements Serializable {
+public class Message extends PageParam implements Serializable {
     @TableId
     private String id;
     @TableField("t_id")

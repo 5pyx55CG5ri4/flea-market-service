@@ -15,13 +15,13 @@ import java.util.Map;
  */
 public interface UserService {
 
-    int addUser(User user) throws Exception;
+    int addUser(User user);
 
-    User qureyByUserName(String userName) throws Exception;
+    User qureyByUserName(String userName);
 
-    User qureyByEmail(String email) throws Exception;
+    User qureyByEmail(String email);
 
-    int update(User user) throws Exception;
+    int update(User user);
 
     User selectById(String id);
 

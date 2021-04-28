@@ -25,26 +25,26 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public int addUser(User user) throws Exception {
+    public int addUser(User user) {
         return userMapper.insert(user);
     }
 
     @Override
-    public User qureyByUserName(String userName) throws Exception {
+    public User qureyByUserName(String userName) {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("user_name",userName);
         return userMapper.selectOne(queryWrapper);
     }
 
     @Override
-    public User qureyByEmail(String email) throws Exception {
+    public User qureyByEmail(String email) {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("email",email);
         return userMapper.selectOne(queryWrapper);
     }
 
     @Override
-    public int update(User user) throws Exception {
+    public int update(User user) {
         UpdateWrapper<User> updateWrapper = new UpdateWrapper();
         updateWrapper.eq("user_name",user.getUserName());
         return userMapper.update(user,updateWrapper);
