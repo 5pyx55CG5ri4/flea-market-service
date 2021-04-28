@@ -51,9 +51,9 @@ ps有图有真相:
 
 再PS:*本来想全改完的,实在改不下去了*,有问题随时联系 :older_man: , :older_man: 无时无刻都在!!!
 
--  _email:zhu990611@gmail.com_ 
--  _wx:pyxcgriixiBrui_ 
--  _qq:1559422960_ 
+-  _ **email** :zhu990611@gmail.com_ 
+-  _ **wx** :pyxcgriixiBrui_ 
+-  _ **qq** :1559422960_ 
 -  _不要在码云联系,联系不上 :older_man: _ 
 
 情怀:此项目是入行前做的第一个完整项目,成长很大,做完就找到工作了,准备练手的朋友可以clone下来玩一玩,但是别玩坏了,心疼 :broken_heart: 
