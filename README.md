@@ -49,15 +49,15 @@ ps有图有真相:
 
 没有了,嘻嘻嘻,自己去品吧;
 
-***修改之后:***
+**修改之后:**
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0428/180055_5926d6df_5074282.png "1619603948.png")
 
 再PS:*本来想全改完的,实在改不下去了*,有问题随时联系 :older_man: , :older_man: 无时无刻都在!!!
 
--  _ **email** :zhu990611@gmail.com_ 
--  _ **wx** :pyxcgriixiBrui_ 
--  _ **qq** :1559422960_ 
--  _不要在码云联系,联系不上 :older_man: _ 
+-  **email** : **zhu990611@gmail.com ** 
+-  **wx** : **pyxcgriixiBrui** 
+-  **qq** : **1559422960** 
+-  不要在码云联系,联系不上 :older_man: 
 
 情怀:此项目是入行前做的第一个完整项目,成长很大,做完就找到工作了,准备练手的朋友可以clone下来玩一玩,但是别玩坏了,心疼 :broken_heart: 
 
