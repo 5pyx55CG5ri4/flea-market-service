@@ -54,7 +54,7 @@ ps有图有真相:
 
 再PS:*本来想全改完的,实在改不下去了*,有问题随时联系 :older_man: , :older_man: 无时无刻都在!!!
 
--  **email** : **zhu990611@gmail.com ** 
+-  **email** :zhu990611@gmail.com
 -  **wx** : **pyxcgriixiBrui** 
 -  **qq** : **1559422960** 
 -  不要在码云联系,联系不上 :older_man: 
