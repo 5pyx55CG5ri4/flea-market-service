@@ -41,7 +41,7 @@ ps有图有真相:
 
 ***修改之后:***
 
-![image-20210428175304426](C:\Users\zhu99\AppData\Roaming\Typora\typora-user-images\image-20210428175304426.png)
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0428/175927_e5f7e624_5074282.png "微信图片_20210319163028.png")
 
 再PS:*本来想全改完的,实在改不下去了*,有问题随时联系me,me无时无刻都在!!!
 
