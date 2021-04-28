@@ -11,7 +11,7 @@
 -----------------------------------------------
 `2021/4/22`
 
-增加根据bean类生成sql文件的工具类(利用反射原理)
+增加根据bean类生成sql文件的工具类(利用反射原理)[工具类地址](https://gitee.com/zhuliyou/FleaMarket/blob/dev/src/main/java/cn/fleamarket/utils/GenerateSqlToBean.java)
 
 要sql的人太多了,新增了一个db文件在resources中 [DB地址](https://gitee.com/zhuliyou/FleaMarket/blob/master/src/main/resources/db/face.sql)
 
