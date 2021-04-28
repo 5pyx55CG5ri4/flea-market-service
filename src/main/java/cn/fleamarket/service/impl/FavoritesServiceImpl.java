@@ -1,6 +1,7 @@
 package cn.fleamarket.service.impl;
 
 import cn.fleamarket.domain.Favorites;
+import cn.fleamarket.domain.User;
 import cn.fleamarket.mapper.FavoritesMapper;
 import cn.fleamarket.service.FavoritesService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -20,16 +21,13 @@ import java.util.Map;
 public class FavoritesServiceImpl implements FavoritesService {
 
     @Autowired
-     FavoritesMapper favoritesMapper;
+    FavoritesMapper favoritesMapper;
 
     @Override
-    public Page selectListPage(Map<String, Object> map) {
-        Long page = (Long) map.get("page");
-        Long number = (Long) map.get("number");
-        String id = (String) map.get("id");
-        Page<Favorites> favoritesPage = new Page<Favorites>(page, number);
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("user_id", id);
+    public Page<Favorites> selectListPage(User user) {
+        Page<Favorites> favoritesPage = new Page<>(user.getPage(), user.getNumber());
+        QueryWrapper<Favorites> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", user.getId());
         favoritesMapper.selectPage(favoritesPage, queryWrapper);
         return favoritesPage;
     }
@@ -47,7 +45,7 @@ public class FavoritesServiceImpl implements FavoritesService {
     @Override
     public List<Favorites> selectByUid(String uId) {
         QueryWrapper<Favorites> favoritesServiceQueryWrapper = new QueryWrapper<>();
-        favoritesServiceQueryWrapper.eq("user_id",uId);
+        favoritesServiceQueryWrapper.eq("user_id", uId);
         return favoritesMapper.selectList(favoritesServiceQueryWrapper);
     }
 
