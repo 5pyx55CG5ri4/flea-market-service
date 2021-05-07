@@ -51,6 +51,8 @@ public class FavoritesController {
         if (Objects.isNull(nowUser)) {
             return R.error("用户未登录!");
         }
+        user.setId(nowUser.getId());
+
         Page<Favorites> favoritesPage = favoritesService.selectListPage(user);
 
         List<Favorites> data = favoritesPage
