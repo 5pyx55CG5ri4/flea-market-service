@@ -12,6 +12,7 @@ import java.io.PrintWriter;
  * 拦截器
  */
 public class Interceptor implements HandlerInterceptor {
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (request.getParameter("user") == null) {

@@ -1,6 +1,7 @@
 package cn.fleamarket.common;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,11 +22,13 @@ public class PageParam {
     /**
      * 当前页
      */
+    @TableField(exist = false)
     private Long page;
 
     /**
      * 每页条数
      */
+    @TableField(exist = false)
     private Long number;
 
     public Long getPage() {
@@ -33,6 +36,6 @@ public class PageParam {
     }
 
     public Long getNumber() {
-        return number == null ? 10 : this.page;
+        return number == null ? 10 : this.number;
     }
 }
