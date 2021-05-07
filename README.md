@@ -61,6 +61,12 @@ ps有图有真相:
 
 情怀:此项目是入行前做的第一个完整项目,成长很大,做完就找到工作了,准备练手的朋友可以clone下来玩一玩,但是别玩坏了,心疼 :broken_heart: 
 
+----------------------------------------------------------------------
+2021/5/7
+ **如果商品显示不出来,请执行这条sql** 
+ALTER TABLE `face`.`f_product` 
+MODIFY COLUMN `is_show` int(0) NOT NULL DEFAULT 1 AFTER `user_id`,
+MODIFY COLUMN `is_del` int(0) NOT NULL DEFAULT 0 AFTER `is_show`;
 
  **如果对你有帮助,请用Star砸我,谢谢!** 
 
