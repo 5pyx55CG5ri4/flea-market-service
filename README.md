@@ -4,7 +4,13 @@
 
 **springboot+mybatisplus+jdk8+mysql5.6**
 
-服务器已经过期,需要数据库文件的请自行根据实体类自行生成sql
+使用说明:
+
+1. [执行此处的SQL语句](https://gitee.com/zhuliyou/FleaMarket/blob/master/src/main/resources/db/face.sql)
+2. 将配置文件中的数据库地址和用户名密码修改为自己的
+3. 启动项目
+
+<s>服务器已经过期,需要数据库文件的请自行根据实体类自行生成sql</s>
 
 前端地址:[前端项目源码](https://gitee.com/zhuliyou/campu)
 
