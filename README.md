@@ -63,12 +63,9 @@ ps有图有真相:
 
 ----------------------------------------------------------------------
 
- **如果商品显示不出来,请执行这条sql** 
 
 
-ALTER TABLE `face`.`f_product` 
-MODIFY COLUMN `is_show` int(0) NOT NULL DEFAULT 1 AFTER `user_id`,
-MODIFY COLUMN `is_del` int(0) NOT NULL DEFAULT 0 AFTER `is_show`;
+
 
 
 
