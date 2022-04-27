@@ -129,4 +129,13 @@ CREATE TABLE `f_user`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
+alter table f_product alter column is_show set default 1;
+
+alter table f_product alter column is_del set default 0;
+
+alter table f_product alter column count set default 0;
+
+alter table f_product alter column sc set default 0;
+
+
 SET FOREIGN_KEY_CHECKS = 1;
