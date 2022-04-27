@@ -1,11 +1,8 @@
-**校园二手交易平台**
+*校园二手交易平台**
 
 基于springboot的毕业设计
 
- **
-
-### 请选择dev分支
-** 
+### **请选择dev分支**  
 
 **springboot+mybatisplus+jdk8+mysql5.6**
 
