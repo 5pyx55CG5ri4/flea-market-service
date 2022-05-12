@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public interface FavoritesService{
 
-    Page<Favorites>  selectListPage(User user);
+    Page<Favorites>  selectListPage(Map<String,Object> user);
 
     Integer addFavorites(Favorites favorites);
     Integer deleteFavorites(String fid);

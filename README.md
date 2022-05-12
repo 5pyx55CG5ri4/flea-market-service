@@ -2,16 +2,24 @@
 
 基于springboot的毕业设计
 
+### **请选择dev分支**  
+
 **springboot+mybatisplus+jdk8+mysql5.6**
 
-服务器已经过期,需要数据库文件的请自行根据实体类自行生成sql
+<s>服务器已经过期,需要数据库文件的请自行根据实体类自行生成sql</s>
+
+使用说明:
+
+1. [执行此处的SQL语句](https://gitee.com/zhuliyou/FleaMarket/blob/master/src/main/resources/db/face.sql)
+2. 将配置文件中的数据库地址和用户名密码修改为自己的
+3. 启动项目
 
 前端地址:[前端项目源码](https://gitee.com/zhuliyou/campu)
 
 -----------------------------------------------
 `2021/4/22`
 
-增加根据bean类生成sql文件的工具类(利用反射原理)
+增加根据bean类生成sql文件的工具类(利用反射原理)[工具类地址](https://gitee.com/zhuliyou/FleaMarket/blob/dev/src/main/java/cn/fleamarket/utils/GenerateSqlToBean.java)
 
 要sql的人太多了,新增了一个db文件在resources中 [DB地址](https://gitee.com/zhuliyou/FleaMarket/blob/master/src/main/resources/db/face.sql)
 
@@ -52,15 +60,22 @@ ps有图有真相:
 **修改之后:**
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0428/180055_5926d6df_5074282.png "1619603948.png")
 
-再PS:*本来想全改完的,实在改不下去了*,有问题随时联系 :older_man: , :older_man: 无时无刻都在!!!
+再PS:*本来想全改完的,实在改不下去了*,有问题请提issues,不定时回复
 
--  **email** :zhu990611@gmail.com
--  **wx** : **pyxcgriixiBrui** 
--  **qq** : **1559422960** 
--  不要在码云联系,联系不上 :older_man: 
+-  **email** :<s> zhu990611@gmail.com</s>
+-  **wx** : <s> ---------</s>
+-  **qq** :  <s> ---------</s>
+-   
 
 情怀:此项目是入行前做的第一个完整项目,成长很大,做完就找到工作了,准备练手的朋友可以clone下来玩一玩,但是别玩坏了,心疼 :broken_heart: 
 
+----------------------------------------------------------------------
 
- **如果对你有帮助,请用Star砸我,谢谢!** 
+
+
+
+
+
+
+ **如果对你有帮助,请用Star砸我,谢谢!** (小声BB:不给点Star不解决问题(不是)手动狗头!)
 

@@ -43,17 +43,16 @@ public class FavoritesController {
 
     @PostMapping(value = "/favoriteList", produces = "application/json")
     @ApiOperation("收藏分页查询列表,入参是page:第几页,number:每页几条")
-    public R<List<Favorites>> favoritesList(@RequestBody User user) {
-        if (Objects.isNull(user)) {
+    public R<List<Favorites>> favoritesList(@RequestBody Map<String,Object> params) {
+        if (Objects.isNull(params)) {
             return R.error("参数错误!");
         }
-        User nowUser = userService.qureyByUserName(user.getUserName());
+        User nowUser = userService.qureyByUserName(params.getOrDefault("username","").toString());
         if (Objects.isNull(nowUser)) {
             return R.error("用户未登录!");
         }
-        user.setId(nowUser.getId());
-
-        Page<Favorites> favoritesPage = favoritesService.selectListPage(user);
+        params.put("userId",nowUser.getId());
+        Page<Favorites> favoritesPage = favoritesService.selectListPage(params);
 
         List<Favorites> data = favoritesPage
                 .getRecords().stream()

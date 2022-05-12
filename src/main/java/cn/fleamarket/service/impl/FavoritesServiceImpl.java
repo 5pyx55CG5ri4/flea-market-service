@@ -24,10 +24,10 @@ public class FavoritesServiceImpl implements FavoritesService {
     FavoritesMapper favoritesMapper;
 
     @Override
-    public Page<Favorites> selectListPage(User user) {
-        Page<Favorites> favoritesPage = new Page<>(user.getPage(), user.getNumber());
+    public Page<Favorites> selectListPage(Map<String, Object> user) {
+        Page<Favorites> favoritesPage = new Page<>(Long.parseLong(user.getOrDefault("page", "1").toString()), Long.parseLong(user.getOrDefault("number", "10").toString()));
         QueryWrapper<Favorites> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id", user.getId());
+        queryWrapper.eq("user_id", user.getOrDefault("userId", ""));
         favoritesMapper.selectPage(favoritesPage, queryWrapper);
         return favoritesPage;
     }
