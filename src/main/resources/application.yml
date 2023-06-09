@@ -5,10 +5,7 @@ server:
     min-spare-threads: 30
   port: 8843
   servlet:
-    context-path: /
-
-
-
+    context-path: /api_v1.1
 spring:
   profiles:
     active: dev
