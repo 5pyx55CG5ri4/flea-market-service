@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fleamarket.modules.product.mapper.ProductMapper">
+
+    <select id="myList" resultType="com.fleamarket.modules.product.domain.Product">
+        select p.title, p.img_url, f.create_time,p.id,f.id as favoritesId
+        from sys_favorites f
+        left join sys_product p on p.id = f.product_id
+        <where>
+            f.user_id = #{userId}
+            and p.state = '1'
+            <if test="title!=null and title!=''">
+                and p.title like CONCAT('%', CONCAT(#{title}, '%'))
+            </if>
+        </where>
+        order by f.create_time desc
+    </select>
+</mapper>

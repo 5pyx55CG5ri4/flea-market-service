@@ -50,7 +50,9 @@ public class LoginController {
     @UnAuth
     public R registeredOrLogin(@RequestBody @Validated RegisteredOrLoginDto registeredOrLoginDto) {
         User user = loginService.registeredOrLogin(registeredOrLoginDto);
-        return R.success(loginService.generateTokenAndCache(user));
+        String token = loginService.generateTokenAndCache(user);
+        user.setToken(token);
+        return R.success(user);
     }
 
 }

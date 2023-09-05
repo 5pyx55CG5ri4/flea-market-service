@@ -52,6 +52,7 @@ public class ImageController {
             file.transferTo(uploadFile);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
+            return R.error(e.getMessage());
         }
         return R.success(Constants.RESOURCE_PREFIX.concat("/").concat(newFileName));
     }

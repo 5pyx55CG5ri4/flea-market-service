@@ -2,8 +2,11 @@ package com.fleamarket.modules.favorites.domain;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fleamarket.common.annotation.TranslationValue;
+import com.fleamarket.modules.product.domain.Product;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -22,6 +25,7 @@ public class Favorites implements Serializable {
 
     @TableId(type = IdType.AUTO)
     private Long id;
+
     /**
      * 商品id
      */
@@ -37,5 +41,7 @@ public class Favorites implements Serializable {
      */
     private Date createTime;
 
+    @TableField(exist = false)
+    private Product product;
 
 }

@@ -4,6 +4,8 @@ package com.fleamarket.modules.message.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fleamarket.common.annotation.TranslationValue;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -31,11 +33,15 @@ public class Message implements Serializable {
     /**
      * 用户id
      */
+    @TranslationValue(targetTable = "sys_user",
+            translationField = "user_name", whereField = "id",
+            alias = "createByName")
     private Long userId;
 
     /**
      * 创建时间
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**

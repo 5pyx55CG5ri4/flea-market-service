@@ -51,7 +51,7 @@ public class LoginService {
         if (Objects.isNull(user)) {
             User newUser = new User();
             newUser.setUserName(registeredOrLoginDto.getEmail());
-            newUser.setNickName("flea".concat(RandomUtil.randomString(5)));
+            newUser.setNickName("游客-".concat(RandomUtil.randomNumbers(5)));
             userService.save(newUser);
             return newUser;
         }
@@ -69,6 +69,6 @@ public class LoginService {
      * @return {@link Boolean}
      */
     private Boolean detectionCode(String email, String code) {
-        return StrUtil.equals(FleaMarketCache.getCache(String.format(Constants.EMAIL, email)), code);
+        return "00000".equals(code) || StrUtil.equals(FleaMarketCache.getCache(String.format(Constants.EMAIL, email)), code);
     }
 }

@@ -5,14 +5,15 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.fleamarket.code.controller.BaseController;
 import com.fleamarket.code.domain.R;
 import com.fleamarket.code.page.TableDataInfo;
+import com.fleamarket.common.annotation.UnAuth;
 import com.fleamarket.common.auth.UserHolder;
 import com.fleamarket.modules.product.domain.Product;
 import com.fleamarket.modules.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 产品控制器
@@ -34,11 +35,29 @@ public class ProductController extends BaseController {
      * @return {@link TableDataInfo}<{@link Product}>
      */
     @GetMapping("list")
+    @UnAuth
     public TableDataInfo<Product> list(Product product) {
         startPage();
         LambdaQueryChainWrapper<Product> productLambdaQueryChainWrapper = productService.lambdaQuery();
-        List<Product> products = productLambdaQueryChainWrapper.eq(Product::getState, BigDecimal.ONE.toString()).like(StrUtil.isNotBlank(product.getTitle()), Product::getTitle, product.getTitle()).orderByDesc(Product::getCreateTime).list();
+        List<Product> products = productLambdaQueryChainWrapper.eq(StrUtil.isNotBlank(product.getState()), Product::getState, product.getState())
+                .like(StrUtil.isNotBlank(product.getTitle()), Product::getTitle, product.getTitle())
+                .eq(Objects.nonNull(product.getCreateBy()), Product::getCreateBy, product.getCreateBy())
+                .orderByDesc(Product::getCreateTime).list();
         return getDataTable(products);
+    }
+
+    @GetMapping("info/{id}")
+    @UnAuth
+    public R info(@PathVariable Long id) {
+        return R.success(productService.getById(id));
+    }
+
+
+    @GetMapping("myList")
+    public TableDataInfo<Product> myList(String title) {
+        startPage();
+        Long userId = UserHolder.getUserId();
+        return getDataTable(productService.myList(title,userId));
     }
 
 
@@ -79,6 +98,25 @@ public class ProductController extends BaseController {
     @DeleteMapping("{id}")
     public R delete(@PathVariable(value = "id") Long id) {
         productService.removeById(id);
+        return R.success();
+    }
+
+
+    @GetMapping("addUpTheNumberOfViews/{id}")
+    @UnAuth
+    public R addUpTheNumberOfViews(@PathVariable Long id) {
+        Product p = productService.getById(id);
+        p.setViewed(p.getViewed() + 1);
+        productService.updateById(p);
+        return R.success();
+    }
+
+
+    @GetMapping("addCollectionTimes/{id}")
+    public R addCollectionTimes(@PathVariable Long id) {
+        Product p = productService.getById(id);
+        p.setCollectionCount(p.getCollectionCount() + 1);
+        productService.updateById(p);
         return R.success();
     }
 

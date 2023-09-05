@@ -45,8 +45,8 @@ public class BaseController {
     protected void startPage() {
         PageDomain pageDomain = TableSupport.buildPageRequest();
         Integer pageNum = pageDomain.getPageNum();
-        if(pageNum!=null && pageNum.equals(0)){
-            pageNum=1;
+        if (pageNum != null && pageNum.equals(0)) {
+            pageNum = 1;
         }
         Integer pageSize = pageDomain.getPageSize();
         if (Objects.nonNull(pageNum) && Objects.nonNull(pageSize)) {

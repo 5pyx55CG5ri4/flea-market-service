@@ -2,8 +2,11 @@ package com.fleamarket.modules.product.domain;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fleamarket.common.annotation.TranslationValue;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -46,11 +49,15 @@ public class Product implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
      * 创建人
      */
+    @TranslationValue(targetTable = "sys_user",
+            translationField = "user_name", whereField = "id",
+            alias = "createByName")
     private Long createBy;
 
     /**
@@ -73,4 +80,6 @@ public class Product implements Serializable {
      */
     private String state;
 
+    @TableField(exist = false)
+    private Long favoritesId;
 }

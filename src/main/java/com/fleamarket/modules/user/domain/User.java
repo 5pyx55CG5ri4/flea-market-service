@@ -2,6 +2,7 @@ package com.fleamarket.modules.user.domain;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -43,4 +44,6 @@ public class User implements Serializable {
      */
     private String state;
 
+    @TableField(exist = false)
+    private String token;
 }

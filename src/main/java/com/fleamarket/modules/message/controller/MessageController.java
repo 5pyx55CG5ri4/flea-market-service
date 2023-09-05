@@ -3,11 +3,14 @@ package com.fleamarket.modules.message.controller;
 import com.fleamarket.code.controller.BaseController;
 import com.fleamarket.code.domain.R;
 import com.fleamarket.code.page.TableDataInfo;
+import com.fleamarket.common.annotation.UnAuth;
 import com.fleamarket.common.auth.UserHolder;
 import com.fleamarket.modules.message.domain.Message;
 import com.fleamarket.modules.message.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 /**
  * 消息控制器
@@ -29,9 +32,14 @@ public class MessageController extends BaseController {
      * @return {@link TableDataInfo}<{@link Message}>
      */
     @GetMapping("list")
+    @UnAuth
     public TableDataInfo<Message> list(Message message) {
         startPage();
-        return getDataTable(messageService.lambdaQuery().list());
+        return getDataTable(messageService.lambdaQuery()
+                .eq(Objects.nonNull(message.getUserId()), Message::getUserId, message.getUserId())
+                .eq(Objects.nonNull(message.getProductId()), Message::getProductId, message.getProductId())
+                .orderByDesc(Message::getCreateTime)
+                .list());
     }
 
 

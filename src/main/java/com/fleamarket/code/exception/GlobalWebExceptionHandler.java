@@ -28,6 +28,7 @@ public class GlobalWebExceptionHandler {
         if (logger.isDebugEnabled()) {
             logger.error("queryString:{}, parameterMap: {}", request.getQueryString(), request.getParameterMap(), ex);
         }
+        ex.printStackTrace();
         return new BaseResponse(Optional.ofNullable(ex.getCode()).map(String::valueOf).orElse("500"), ex.getLocalizedMessage());
     }
 
@@ -40,6 +41,7 @@ public class GlobalWebExceptionHandler {
     public BaseResponse exceptionHandler(HttpServletRequest request, Exception ex) {
         logger.error("do [{}] on [{}] failed. exMsg:{}", request.getMethod(), request.getRequestURL(),
                 ex.getLocalizedMessage());
+        ex.printStackTrace();
         if (logger.isDebugEnabled()) {
             logger.error("queryString:{}, parameterMap: {}", request.getQueryString(), request.getParameterMap(), ex);
         }

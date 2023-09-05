@@ -6,6 +6,7 @@ import com.fleamarket.code.page.TableDataInfo;
 import com.fleamarket.common.auth.UserHolder;
 import com.fleamarket.modules.favorites.domain.Favorites;
 import com.fleamarket.modules.favorites.service.FavoritesService;
+import com.fleamarket.modules.product.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,9 @@ public class FavoritesController extends BaseController {
         startPage();
         return getDataTable(favoritesService.lambdaQuery().list());
     }
+
+
+
 
 
     /**
@@ -73,6 +77,12 @@ public class FavoritesController extends BaseController {
     public R delete(@PathVariable(value = "id") Long id) {
         favoritesService.removeById(id);
         return R.success();
+    }
+
+    @GetMapping("countByProductId/{productId}")
+    public R countByProductId(@PathVariable Long productId) {
+        Long count = favoritesService.lambdaQuery().eq(Favorites::getUserId, UserHolder.getUserId()).eq(Favorites::getProductId, productId).count();
+        return R.success(count <= 0);
     }
 
 }
