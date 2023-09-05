@@ -16,6 +16,11 @@ springboot+mybatisplus+jdk8+mysql5.6
    配置文件中的file-upload-path改为自己想要上传文件的地址(请确保目录存在)
 4. 启动项目[FleaMarketApplication.java](src%2Fmain%2Fjava%2Fcom%2Ffleamarket%2FFleaMarketApplication.java)
 
+一些问题:
+
+1. 缓存问题:为了避免上手难度,这次重构剔除了Redis,缓存使用本地内存,重启项目验证码和token将失效
+2. 文件上传问题,请确保使用说明中的第3步做了 并且目录存在 并且有权限
+3. end
 
 **近期工作不忙 重新捡起以前的毕业设计 重构了一波前后端 适合学习和做毕设**
 
