@@ -17,7 +17,7 @@ springboot+mybatisplus+jdk8+mysql5.6
 4. 启动项目[FleaMarketApplication.java](src%2Fmain%2Fjava%2Fcom%2Ffleamarket%2FFleaMarketApplication.java)
 
 
-**近期工作不忙 重新捡起以前的毕业设计 重构了一波 适合学习和做毕设**
+**近期工作不忙 重新捡起以前的毕业设计 重构了一波前后端 适合学习和做毕设**
 
 **如果对你有帮助,请用Star砸我,谢谢!** (小声BB:不给点Star不解决问题(不是)手动狗头!)
 
