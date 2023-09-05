@@ -1,7 +1,9 @@
 **校园二手交易平台**
 
 基于springboot的毕业设计
+
 **技术栈:springboot+mybatisplus+jdk8+mysql5.6**
+
 使用说明:
 1. [执行此处的SQL语句](https://gitee.com/zhuliyou/FleaMarket/blob/master/src/main/resources/db/face.sql)
 2. 将配置文件中的数据库地址和用户名密码修改为自己的
