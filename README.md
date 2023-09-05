@@ -14,7 +14,7 @@ springboot+mybatisplus+jdk8+mysql5.6
 2. 将[application-dev.yml](src%2Fmain%2Fresources%2Fapplication-dev.yml)配置文件中的数据库地址和用户名密码修改为自己的
 3. 将[application-dev.yml](src%2Fmain%2Fresources%2Fapplication-dev.yml)
    配置文件中的file-upload-path改为自己想要上传文件的地址(请确保目录存在)
-4. 启动项目
+4. 启动项目[FleaMarketApplication.java](src%2Fmain%2Fjava%2Fcom%2Ffleamarket%2FFleaMarketApplication.java)
 
 
 **近期工作不忙 重新捡起以前的毕业设计 重构了一波 适合学习和做毕设**
