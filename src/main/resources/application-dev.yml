@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/flea_market?autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
     username: root
-    password: 990611
+    password: root
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
