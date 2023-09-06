@@ -6,7 +6,7 @@
 
 springboot+mybatisplus+jdk8+mysql5.6
 
-[前端项目源码](https://gitee.com/zhuliyou/campu)
+[前端项目源码](https://github.com/5pyx55CG5ri4/flea-market-ui)
 
 **使用说明:**
 
