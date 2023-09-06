@@ -36,14 +36,10 @@ public class TranslationValueAspect {
     }
 
     @Around("pointOfContact()")
-    public Object doAround(ProceedingJoinPoint pjp) {
+    public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
         Object result;
-        try {
-            result = pjp.proceed();
-            this.translationValue(result);
-        } catch (Throwable e) {
-            throw new RuntimeException(e);
-        }
+        result = pjp.proceed();
+        this.translationValue(result);
         return result;
     }
 
