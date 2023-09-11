@@ -10,7 +10,7 @@ springboot+mybatisplus+jdk8+mysql5.6
 
 **使用说明:**
 
-1. [执行此处的SQL语句](https://gitee.com/I5pyx55CG5ri4/FleaMarket/blob/main/src/main/resources/db/face.sql)
+1. [执行此处的SQL语句](https://github.com/5pyx55CG5ri4/flea-market-service/blob/main/src/main/resources/db/face.sql)
 2. 将[application-dev.yml](src%2Fmain%2Fresources%2Fapplication-dev.yml)配置文件中的数据库地址和用户名密码修改为自己的
 3. 将[application-dev.yml](src%2Fmain%2Fresources%2Fapplication-dev.yml)
    配置文件中的file-upload-path改为自己想要上传文件的地址(请确保目录存在)
